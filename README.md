@@ -74,3 +74,18 @@ services:
       MYSQL_RANDOM_ROOT_PASSWORD: 
       MYSQL_ONETIME_PASSWORD: 
 ```
+
+- Nginx
+```yaml
+services:
+  web:
+    image: nginx
+    ports:
+      - "8080:80"
+    environment:
+      - NGINX_HOST=foobar.com
+      - NGINX_PORT=80
+    volumes:
+      - ./mysite.template:/etc/nginx/conf.d/mysite.template
+    # command: [nginx-debug, '-g', 'daemon off;']
+```
