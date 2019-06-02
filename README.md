@@ -21,3 +21,56 @@ services:
 volumes:
   my-db-postgres:
 ```
+
+- MariaDB
+```yaml
+services:
+  db-mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: example
+      MYSQL_USER: example
+      MYSQL_PASSWORD: example
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes # no
+      MYSQL_RANDOM_ROOT_PASSWORD: yes # <not set>
+```
+
+- Mongo
+```yaml
+services:
+  db-mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: db
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  db-mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+```
+
+- MySQL
+```yaml
+services:
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE:
+      MYSQL_USER:
+      MYSQL_PASSWORD:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 
+      MYSQL_RANDOM_ROOT_PASSWORD: 
+      MYSQL_ONETIME_PASSWORD: 
+```
