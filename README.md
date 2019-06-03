@@ -119,3 +119,51 @@ services:
     volumes:
       - ./consul.json:/config/consul.json
 ```
+
+- RabbitMQ
+```yaml
+services:
+  rabbitmq:
+    image: rabbitmq:3.7-management-alpine
+    restart: unless-stopped
+    ports:
+      - "5672:5672" # queue connection
+      - "15672:15672" # management UI
+    environment:
+      - RABBITMQ_DEFAULT_USER=
+      - RABBITMQ_DEFAULT_PASS=
+      - RABBITMQ_DEFAULT_VHOST=/
+      - RABBITMQ_HIPE_COMPILE=0
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+    hostname: rabbitmq
+
+volumes:
+  rabbitmq:
+```
+
+- Redis
+```yaml
+services:
+  redis:
+    image: redis:5-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+    command: redis-server --appendonly yes
+
+volumes:
+  redis:
+```
+
+- Memcached
+```yaml
+services:
+  memcached:
+    image: memcached:1-alpine
+    restart: unless-stopped
+    ports:
+      - "11211:11211"
+```
