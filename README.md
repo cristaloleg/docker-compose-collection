@@ -89,3 +89,15 @@ services:
       - ./mysite.template:/etc/nginx/conf.d/mysite.template
     # command: [nginx-debug, '-g', 'daemon off;']
 ```
+
+- Consul
+```yaml
+  consul:
+    image: consul
+    command: "agent -dev -bind=0.0.0.0 -client=0.0.0.0 -server -ui -bootstrap -config-file=/config/consul.json -enable-script-checks"
+    ports:
+      - 8500:8500
+    dns_search: .
+    volumes:
+      - ./consul.json:/config/consul.json
+```
