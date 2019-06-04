@@ -142,6 +142,7 @@ services:
 ### Services
 
 - [Consul](#Consul)
+- [Zookeeper](#Zookeeper)
 
 #### Consul
 ```yaml
@@ -153,6 +154,47 @@ services:
     dns_search: .
     volumes:
       - ./consul.json:/config/consul.json
+```
+
+#### Zookeeper
+```yaml
+services:
+  zoo1:
+    image: zookeeper
+    restart: always
+    hostname: zoo1
+    ports:
+      - 2181:2181
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+      ZOO_TICK_TIME: 2000
+      ZOO_INIT_LIMIT: 5
+      ZOO_SYNC_LIMIT: 2
+      ZOO_MAX_CLIENT_CNXNS: 60
+      ZOO_STANDALONE_ENABLED: true
+      ZOO_AUTOPURGE_PURGEINTERVAL: 0
+      ZOO_AUTOPURGE_SNAPRETAINCOUNT: 3
+
+  zoo2:
+    image: zookeeper
+    restart: always
+    hostname: zoo2
+    ports:
+      - 2182:2181
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
+
+  zoo3:
+    image: zookeeper
+    restart: always
+    hostname: zoo3
+    ports:
+      - 2183:2181
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888
 ```
 
 ### Storage
