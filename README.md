@@ -122,7 +122,29 @@ volumes:
 ### Metrics
 ### Proxy
 
+- [Envoy](#Envoy)
 - [Nginx](#Nginx)
+
+#### Envoy
+```yaml
+  proxy-envoy:
+    build:
+      context: .
+      dockerfile: envoyproxy/envoy
+    volumes:
+      - ./envoy.yaml:/etc/envoy.yaml
+    networks:
+      - envoymesh
+    expose:
+      - "80"
+      - "8001"
+    ports:
+      - "8000:80"
+      - "8001:8001"
+
+networks:
+  envoymesh: {}
+```
 
 #### Nginx
 ```yaml
