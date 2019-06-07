@@ -12,10 +12,20 @@
 
 ### Database
 
+- [Aerospike](#Aerospike)
 - [MariaDB](#MariaDB)
 - [Mongo](#Mongo)
 - [MySQL](#MySQL)
 - [Postgres](#Postgres)
+
+#### Aerospike
+```yaml
+services:
+  db-aerospike:
+    image: aerospike/aerospike-server:4.5.2.2
+    ports:
+      - "3000:3000"
+```
 
 #### MariaDB
 ```yaml
