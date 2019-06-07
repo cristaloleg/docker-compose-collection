@@ -130,6 +130,28 @@ volumes:
 ```
 
 ### Metrics
+
+- [Grafana](#Grafana)
+
+#### Grafana
+```yaml
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:6.2.1
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafanadata:/var/lib/grafana
+    networks:
+      - metrics_net
+    restart: always
+
+volumes:
+  grafanadata: {}
+networks:
+  metrics_net:
+```
+
 ### Proxy
 
 - [Envoy](#Envoy)
