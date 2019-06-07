@@ -95,8 +95,18 @@ volumes:
 ### Logs
 ### Messaging
 
+- [NATS](#NATS)
 - [RabbitMQ](#RabbitMQ)
 
+#### NATS
+```yaml
+services:
+  nats:
+    image: nats:1.4.1
+    ports:
+      - "4222:4222"
+```   
+ 
 #### RabbitMQ
 ```yaml
 services:
