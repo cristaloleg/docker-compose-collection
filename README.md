@@ -13,6 +13,7 @@
 ### Database
 
 - [Aerospike](#Aerospike)
+- [Clickhouse](#Clickhouse)
 - [MariaDB](#MariaDB)
 - [Mongo](#Mongo)
 - [MySQL](#MySQL)
@@ -25,6 +26,17 @@ services:
     image: aerospike/aerospike-server:4.5.2.2
     ports:
       - "3000:3000"
+```
+
+#### Clickhouse
+```yaml
+services:
+  db-clickhouse:
+    image: yandex/clickhouse-server
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+      - "9009:9009"
 ```
 
 #### MariaDB
