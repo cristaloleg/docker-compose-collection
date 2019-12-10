@@ -44,14 +44,30 @@ services:
 services:
   db-mariadb:
     image: mariadb
-    restart: always
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: example
       MYSQL_DATABASE: example
       MYSQL_USER: example
       MYSQL_PASSWORD: example
-      MYSQL_ALLOW_EMPTY_PASSWORD: yes # no
-      MYSQL_RANDOM_ROOT_PASSWORD: yes # <not set>
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
+      MYSQL_RANDOM_ROOT_PASSWORD: 'no'
+    volumes:
+      - mariadb:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db-mariadb
+      MYSQL_USER: example
+      MYSQL_PASSWORD: example
+
+volumes:
+  mariadb:
 ```
 
 #### Mongo
@@ -59,20 +75,28 @@ services:
 services:
   db-mongo:
     image: mongo
-    restart: always
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
     environment:
       MONGO_INITDB_DATABASE: db
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo:/data/db
 
   db-mongo-express:
     image: mongo-express
-    restart: always
+    restart: unless-stopped
     ports:
-      - 8081:8081
+      - "8081:8081"
     environment:
+      ME_CONFIG_MONGODB_SERVER: db-mongo
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
+
+volumes:
+  mongo:
 ```
 
 #### MySQL
@@ -81,18 +105,32 @@ services:
   db:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
-    restart: always
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: example
       MYSQL_DATABASE:
       MYSQL_USER:
       MYSQL_PASSWORD:
-      MYSQL_ALLOW_EMPTY_PASSWORD: 
-      MYSQL_RANDOM_ROOT_PASSWORD: 
-      MYSQL_ONETIME_PASSWORD: 
+      MYSQL_ALLOW_EMPTY_PASSWORD:
+      MYSQL_RANDOM_ROOT_PASSWORD:
+      MYSQL_ONETIME_PASSWORD:
+    volumes:
+      - mysql:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+
+volumes:
+  mysql:
 ```
 
-#### Postgres:
+#### Postgres
 ```yaml
 services:
   db-postgres:
@@ -142,7 +180,6 @@ services:
       - RABBITMQ_DEFAULT_USER=
       - RABBITMQ_DEFAULT_PASS=
       - RABBITMQ_DEFAULT_VHOST=/
-      - RABBITMQ_HIPE_COMPILE=0
     volumes:
       - rabbitmq:/var/lib/rabbitmq
     hostname: rabbitmq
