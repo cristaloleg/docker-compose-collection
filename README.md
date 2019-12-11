@@ -1,6 +1,6 @@
 # docker-compose collection
 
-### Contents
+## Contents
 
 - [Database](#database)
 - [Logs](#logs)
@@ -9,6 +9,7 @@
 - [Proxy](#proxy)
 - [Services](#services)
 - [Storage](#storage)
+- [Search](#search)
 
 ### Database
 
@@ -339,4 +340,30 @@ services:
 
 volumes:
   redis:
+```
+
+### Search
+
+- [ELK Stack: Elasticsearch, Logstash, Kibana](#ELK)
+
+#### ELK
+```yaml
+
+# Required on Linux:
+# sudo sysctl -w vm.max_map_count=262144
+# sudo sh -c 'echo "vm.max_map_count=262144" >> /etc/sysctl.conf'
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html
+
+services:
+  elk:
+    image: sebp/elk:683
+    restart: unless-stopped
+    ports:
+      - "5601:5601" # Elasticsearch
+      - "9200:9200" # Kibana
+    volumes:
+      - es:/usr/share/elasticsearch/data
+
+volumes:
+  es:
 ```
