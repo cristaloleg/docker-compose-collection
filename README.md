@@ -192,6 +192,7 @@ volumes:
 ### Metrics
 
 - [Grafana](#Grafana)
+- [Graphite](#Graphite)
 
 #### Grafana
 ```yaml
@@ -210,6 +211,15 @@ volumes:
   grafanadata: {}
 networks:
   metrics_net:
+```
+
+#### Graphite
+```yaml
+  graphite:
+    image: nickstenning/graphite
+    ports:
+      - "80:80"
+      - "2003:2003"
 ```
 
 ### Proxy
