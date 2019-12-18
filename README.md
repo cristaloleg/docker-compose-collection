@@ -216,6 +216,7 @@ volumes:
 
 - [Grafana](#Grafana)
 - [Graphite](#Graphite)
+- [VictoriaMetrics](#VictoriaMetrics)
 
 #### Grafana
 ```yaml
@@ -244,6 +245,10 @@ networks:
       - "80:80"
       - "2003:2003"
 ```
+
+#### VictoriaMetrics
+
+Just take it there https://github.com/VictoriaMetrics/VictoriaMetrics/blob/master/deployment/docker/docker-compose.yml
 
 ### Proxy
 
