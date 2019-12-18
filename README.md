@@ -156,8 +156,31 @@ volumes:
 ### Logs
 ### Messaging
 
+- [Kafka](#Kafka)
 - [NATS](#NATS)
 - [RabbitMQ](#RabbitMQ)
+
+#### Kafka
+```yaml
+services:
+  zk:
+    image: confluentinc/cp-zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka:
+    image: confluentinc/cp-kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zk
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092"
+      KAFKA_ZOOKEEPER_CONNECT: zk:2181
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+```
 
 #### NATS
 ```yaml
