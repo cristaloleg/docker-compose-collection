@@ -372,7 +372,7 @@ services:
       - "5601:5601" # Elasticsearch
       - "9200:9200" # Kibana
     volumes:
-      - es:/usr/share/elasticsearch/data
+      - es:/var/lib/elasticsearch
 
 volumes:
   es:
