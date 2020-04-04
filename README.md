@@ -353,6 +353,7 @@ services:
 
 - [Memcached](#Memcached)
 - [Redis](#Redis)
+- [Minio](#Minio)
 
 #### Memcached
 ```yaml
@@ -379,6 +380,34 @@ services:
 volumes:
   redis:
 ```
+
+#### Minio
+```yaml
+services:
+  minio:
+    image: minio/minio:RELEASE.2020-04-02T21-34-49Z
+    restart: unless-stopped
+    ports:
+      - "9001:9000"
+    volumes:
+      - data1-1:/data1
+      - data1-2:/data2
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: minio123
+    command: server start
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+volumes:
+  data1-1:
+  data1-2:
+```
+
+Source: https://github.com/minio/minio/blob/master/docs/orchestration/docker-compose/docker-compose.yaml
 
 ### Search
 
